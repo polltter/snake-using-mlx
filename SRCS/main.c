@@ -6,19 +6,13 @@
 /*   By: mvenanci@student.42lisboa.com <mvenanci    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 20:42:08 by mvenanci@st       #+#    #+#             */
-/*   Updated: 2023/01/10 21:08:04 by mvenanci@st      ###   ########.fr       */
+/*   Updated: 2023/01/11 17:38:17 by mvenanci@st      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../INCS/snake.h"
 
-void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
-{
-	char	*dst;
 
-	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
-	*(unsigned int *)dst = color;
-}
 
 void	data_init(t_mlx_data *data)
 {
@@ -38,45 +32,66 @@ int	ft_close(t_mlx_data *data)
 	exit(0);
 }
 
-void draw(t_mlx_data *data)
-{
-	int x = 0;
-	int y = 0;
 
-	while (x <= IMG_W)
-	{
-		while (y <= IMG_H)
-		{
-			my_mlx_pixel_put(&(data->img), x, y, 0);
-			y++;
-		}
-		x++;
-	}
-	mlx_put_image_to_window(data->mlx, data->mlx_win, (data->img).img, 0, 0);
+t_mlx_data *mlx(){
+
+	static t_mlx_data data;
+
+	return (&data);
 }
 
-/* int	handle_keys(int k, t_mlx_data *data)
+
+int	handle_keys(int k, t_mlx_data *data)
 {
-	if (keycode == 65361)
-		data->offset = sum_imaginary(data->offset, init_number(100, 0));
-	else if (keycode == 65363)
-		data->offset = sum_imaginary(data->offset, init_number(-100, 0));
-	else if (keycode == 65362)
-		data->offset = sum_imaginary(data->offset, init_number(0, 100));
-	else if (keycode == 65364)
-		data->offset = sum_imaginary(data->offset, init_number(0, -100));
-	else if (keycode == 65307)
-		ft_close(0);
+	for (int i = 0; i < 5; i++)
+	{
+		if (mlx()->objs[i]->keys)
+		{	
+			data->this_obj = mlx()->objs[i]; 
+			mlx()->objs[i]->keys(k);
+		}
+	}
+	if (k != 'w' && k != 'a' && k != 's' && k != 'd' && k != 65307)
+		return (1);	
+	draw_rec(this()->pos.x, this()->pos.y, 0);
+	if (k == 65307)
+		ft_close(mlx());
+	draw();
 	return (1);
-} */
+}
+
+int up(t_mlx_data *data)
+{
+	t_object *t = data->this_obj;
+	draw_clear();
+	for (int i = 0; i < 5; i++)
+	{
+		data->this_obj = mlx()->objs[i]; 
+		mlx()->objs[i]->render();
+	}
+	draw();
+	data->this_obj = t;
+	return (1);
+}
 
 int main(void)
 {
-	t_mlx_data data;
 	
-	data_init(&data);
-	mlx_hook(data.mlx_win, 17, 0, ft_close, &data);
-	draw(&data);
-	// mlx_hook(data.mlx_win, 2, 1l << 0, handle_keys, &data);
-	mlx_loop(data.mlx);
+	data_init(mlx());
+	mlx_hook(mlx()->mlx_win, 17, 0, ft_close, mlx());
+	for (int i = 0; i < 5; i++)
+	{
+		if (i > 0)
+		{
+			mlx()->objs[i] = new_object(i * GRID, i * GRID, sizeof(t_object));		
+			create_square(mlx()->objs[i], 345678 * (i + 1));
+		}
+		else 
+			mlx()->objs[i] =  new_apple(i * GRID, i * GRID);
+	}
+	mlx()->this_obj = mlx()->objs[0];
+	mlx_hook(mlx()->mlx_win, 2, 1l << 0, handle_keys, mlx());
+	//mlx_hook(mlx()->mlx_win, 4, 1l << 2, select_obj, mlx());
+	mlx_loop_hook(mlx()->mlx, up, mlx());
+	mlx_loop(mlx()->mlx);
 }

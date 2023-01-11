@@ -26,4 +26,7 @@ norm:
 	norminette -R CheckForbiddenSourceHeader SRCS/*
 	norminette -R CheckDefine INCS/*
 
+r:
+	make re && clear && ./snake
+
 re: fclean all
