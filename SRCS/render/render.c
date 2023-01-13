@@ -1,33 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   objects.c                                          :+:      :+:    :+:   */
+/*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mvenanci@student.42lisboa.com <mvenanci    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/11 14:21:03 by mvenanci@st       #+#    #+#             */
-/*   Updated: 2023/01/13 00:05:28 by mvenanci@st      ###   ########.fr       */
+/*   Created: 2023/01/13 00:07:48 by mvenanci@st       #+#    #+#             */
+/*   Updated: 2023/01/13 00:22:29 by mvenanci@st      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../INCS/snake.h"
+#include "../../INCS/snake.h"
 
-t_object *this(void)
+void	render_each(t_elems *e, void *o)
 {
-	return (mlx()->this_obj);
+	t_object	*value;
+	
+	(void)o;
+	value = e->content;
+	mlx()->this_obj = value;
+	value->render();
 }
 
-static void render()
+void	keys_each(t_elems *e, void *o)
 {
-	draw_obj(this());
-}
-
-t_object	*new_object(int x, int y, size_t size)
-{
-	t_object *new = ft_calloc(size);
-	new->type = OBJECT;
-	new->pos.x = x;
-	new->pos.y = y;
-	new->render = render;
-	return (new);
+	t_object	*value;
+	
+	(void)o;
+	value = e->content;
+	mlx()->this_obj = value;
+	if (value->keys)
+		value->keys((*(int *)o));
 }

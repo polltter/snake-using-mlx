@@ -6,7 +6,7 @@
 /*   By: mvenanci@student.42lisboa.com <mvenanci    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 20:53:21 by mvenanci@st       #+#    #+#             */
-/*   Updated: 2023/01/11 17:36:26 by mvenanci@st      ###   ########.fr       */
+/*   Updated: 2023/01/13 00:16:18 by mvenanci@st      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,11 @@
 # include <../mlx_linux/mlx.h>
 # include <stdlib.h>
 # include <stdio.h>
+# include "../SRCS/list_utils/list_utils.h" 
 
 # define IMG_W 1000	
 # define IMG_H 1000
 # define GRID 32
-
-//typedef this_objs() this;
 
 typedef struct s_object t_object;
 typedef struct s_apple t_apple;
@@ -54,7 +53,7 @@ typedef struct s_mlx_data {
 	void		*mlx_win;
 	t_data		img;
 	t_object	*this_obj;
-	t_object	*objs[5];
+	void		*objs;
 }	t_mlx_data;
 
 struct s_pos {
@@ -92,6 +91,8 @@ void	load_imgs(t_object *obj, char *path);
 t_object *this();
 t_object *new_apple(int x, int y);
 void	draw_clear();
+void	render_each(t_elems *e, void *o);
+void	keys_each(t_elems *e, void *o);
 
 
 #endif

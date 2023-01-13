@@ -6,7 +6,7 @@
 /*   By: mvenanci@student.42lisboa.com <mvenanci    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 14:30:36 by mvenanci@st       #+#    #+#             */
-/*   Updated: 2023/01/11 17:03:27 by mvenanci@st      ###   ########.fr       */
+/*   Updated: 2023/01/13 00:17:11 by mvenanci@st      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 void	load_imgs(t_object *obj, char *path)
 {
-	
 	obj->img.img = mlx_xpm_file_to_image(mlx()->mlx, path, &obj->img.w, &obj->img.h);
 	obj->img.addr = mlx_get_data_addr(obj->img.img, \
 	&obj->img.bits_per_pixel, &obj->img.line_length, &obj->img.endian);	
@@ -73,4 +72,3 @@ void	create_square(t_object *obj, int color)
 		for (int y = 0; y < GRID; y++)
 			my_mlx_pixel_put(&(obj->img), x, y, color);
 }
-
