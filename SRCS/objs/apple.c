@@ -17,7 +17,7 @@ static void render(void)
 {
 	t_apple *apple = (t_apple *) this();
 	static int count;
-	if (count++ > 4)
+	if (count++ > 3)
 	{	
 		if (apple->direction == UP)
 			apple->pos.y -= 2;
@@ -35,13 +35,13 @@ static void render(void)
 static void move(int k) {
 
 	t_apple *apple = (t_apple *)this();
-	if (k == 'w')
+	if (k == 'w' && apple->direction != UP)
 		apple->direction = UP;
-	else if (k == 'a')
+	else if (k == 'a' && apple->direction != LEFT)
 		apple->direction = LEFT;
-	else if (k == 'd')
+	else if (k == 'd' && apple->direction != RIGHT)
 		apple->direction = RIGHT;
-	else if (k == 's')
+	else if (k == 's'&& apple->direction != DOWN)
 		apple->direction = DOWN;
 }
 
