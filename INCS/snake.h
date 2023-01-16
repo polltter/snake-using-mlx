@@ -6,7 +6,7 @@
 /*   By: mvenanci@student.42lisboa.com <mvenanci    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 20:53:21 by mvenanci@st       #+#    #+#             */
-/*   Updated: 2023/01/13 00:16:18 by mvenanci@st      ###   ########.fr       */
+/*   Updated: 2023/01/16 19:38:20 by mvenanci@st      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ typedef enum e_dir{
 	UP,
 	DOWN,
 	LEFT,
-	RIGTH
+	RIGHT
 }	t_dir;
 
 typedef struct s_data {
@@ -80,7 +80,7 @@ struct s_apple {
 	int		direction;
 };
 
-t_object	*new_object(int x, int y, size_t size);
+t_object	*new_object(t_pos pos,size_t size);
 void		draw();
 void		my_mlx_pixel_put(t_data *data, int x, int y, int color);
 t_mlx_data *mlx();
@@ -93,6 +93,7 @@ t_object *new_apple(int x, int y);
 void	draw_clear();
 void	render_each(t_elems *e, void *o);
 void	keys_each(t_elems *e, void *o);
+void	create_rec(t_object *obj, int color, t_pos rec);
 
 
 #endif

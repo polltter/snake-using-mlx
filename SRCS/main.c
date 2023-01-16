@@ -6,7 +6,7 @@
 /*   By: mvenanci@student.42lisboa.com <mvenanci    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 20:42:08 by mvenanci@st       #+#    #+#             */
-/*   Updated: 2023/01/13 00:21:58 by mvenanci@st      ###   ########.fr       */
+/*   Updated: 2023/01/16 19:43:20 by mvenanci@st      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,30 @@
 
 void	create_wall(void)
 {
-	
+	t_elems *e;
+    t_pos   pos = {0, 0};
+
+	for (; pos.x <= IMG_W; pos.x += 32)
+	{
+		e = array(mlx()->objs)->add(new_object(pos, sizeof(t_object)));
+        load_imgs((t_object *)e->content, "imgs/wall.xpm");
+	}
+    for (pos.y=32, pos.x = IMG_W - GRID ; pos.y <= IMG_H; pos.y += 32)
+    {
+        e = array(mlx()->objs)->add(new_object(pos, sizeof(t_object)));
+        load_imgs((t_object *)e->content, "imgs/wall.xpm");
+    }
+
+    for (pos.x = IMG_W - GRID,  pos.y = IMG_H - GRID; pos.x >= 0; pos.x -= 32)
+    {
+        e = array(mlx()->objs)->add(new_object(pos, sizeof(t_object)));
+        load_imgs((t_object *)e->content, "imgs/wall.xpm");
+    }
+    for (pos.x = 0, pos.y = IMG_H - GRID; pos.y >= 0; pos.y -= 32)
+    {
+        e = array(mlx()->objs)->add(new_object(pos, sizeof(t_object)));
+        load_imgs((t_object *)e->content, "imgs/wall.xpm");
+    }
 }
 
 void	data_init(t_mlx_data *data)
@@ -73,16 +96,8 @@ int main(void)
 	data_init(mlx());
 	mlx_hook(mlx()->mlx_win, 17, 0, ft_close, mlx());
 	mlx()->objs = creat_array();
-	for (int i = 0; i < 5; i++)
-	{
-		if (i > 0)
-		{	
-			t_elems *e =  array(mlx()->objs)->add(new_object(i * GRID, i * GRID, sizeof(t_object)));
-			create_square(e->content, i * 3456);
-		}
-		else 
-			array(mlx()->objs)->add(new_apple(i * GRID, i * GRID));
-	}
+	create_wall();
+	array(mlx()->objs)->add(new_apple(GRID, GRID));
 	mlx_hook(mlx()->mlx_win, 2, 1l << 0, handle_keys, mlx());
 	//mlx_hook(mlx()->mlx_win, 4, 1l << 2, select_obj, mlx());
 	mlx_loop_hook(mlx()->mlx, up, mlx());

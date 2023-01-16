@@ -6,7 +6,7 @@
 /*   By: mvenanci@student.42lisboa.com <mvenanci    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 14:30:36 by mvenanci@st       #+#    #+#             */
-/*   Updated: 2023/01/13 00:17:11 by mvenanci@st      ###   ########.fr       */
+/*   Updated: 2023/01/16 19:34:23 by mvenanci@st      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,11 @@ void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 {
 	char	*dst;
 
-	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
-	*(unsigned int *)dst = color;
+    if (color != 0xff00c3)
+    {
+        dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
+        *(unsigned int *)dst = color;
+    }
 }
 
 int	my_mlx_pixel_get(t_data *data, int x, int y)
@@ -62,13 +65,19 @@ void	draw_clear()
 
 void	create_square(t_object *obj, int color)
 {
-
-	obj->img.img = mlx_new_image(mlx()->mlx, GRID, GRID);
-	obj->img.w = GRID;
-	obj->img.h = GRID;	
+	obj->img.img = mlx_new_image(mlx()->mlx, obj->img.w, obj->img.h);
 	obj->img.addr = mlx_get_data_addr(obj->img.img, \
 	&obj->img.bits_per_pixel, &obj->img.line_length, &obj->img.endian);
-	for (int x = 0; x < GRID; x++)
-		for (int y = 0; y < GRID; y++)
+	for (int x = 0; x < obj->img.w; x++)
+		for (int y = 0; y < obj->img.h; y++)
 			my_mlx_pixel_put(&(obj->img), x, y, color);
+}
+
+void	create_rec(t_object *obj, int color, t_pos rec)
+{
+    obj->img.w = rec.x;
+    obj->img.h = rec.y;
+    create_square(obj, color);
+    draw_obj(obj);
+
 }

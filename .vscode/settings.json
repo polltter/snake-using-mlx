@@ -1,5 +1,10 @@
 {
 	"files.associations": {
-		"snake.h": "c"
+		"snake.h": "c",
+		"concepts": "c",
+		"cstdio": "c",
+		"new": "c",
+		"*.tcc": "c",
+		"type_traits": "c"
 	}
 }
