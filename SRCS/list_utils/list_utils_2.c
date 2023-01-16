@@ -6,8 +6,8 @@
 /*   By: mvenanci@student.42lisboa.com <mvenanci    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 23:25:26 by mvenanci@st       #+#    #+#             */
-/*   Updated: 2023/01/12 23:34:39 by mvenanci@st      ###   ########.fr       */
-/*                                                                            */
+/*   Updated: 2023/01/12 23:34:39 by mv void *penanci@st      ###   ########.fr       */
+/*                                    void *p                                         */
 /* ************************************************************************** */
 
 #include "list_utils.h"

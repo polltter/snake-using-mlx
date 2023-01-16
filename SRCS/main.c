@@ -14,30 +14,16 @@
 
 void	create_wall(void)
 {
-	t_elems *e;
     t_pos   pos = {0, 0};
 
 	for (; pos.x <= IMG_W; pos.x += 32)
-	{
-		e = array(mlx()->objs)->add(new_object(pos, sizeof(t_object)));
-        load_imgs((t_object *)e->content, "imgs/wall.xpm");
-	}
+		array(mlx()->objs)->add(new_wall(pos));
     for (pos.y=32, pos.x = IMG_W - GRID ; pos.y <= IMG_H; pos.y += 32)
-    {
-        e = array(mlx()->objs)->add(new_object(pos, sizeof(t_object)));
-        load_imgs((t_object *)e->content, "imgs/wall.xpm");
-    }
-
+        array(mlx()->objs)->add(new_wall(pos));
     for (pos.x = IMG_W - GRID,  pos.y = IMG_H - GRID; pos.x >= 0; pos.x -= 32)
-    {
-        e = array(mlx()->objs)->add(new_object(pos, sizeof(t_object)));
-        load_imgs((t_object *)e->content, "imgs/wall.xpm");
-    }
+        array(mlx()->objs)->add(new_wall(pos));
     for (pos.x = 0, pos.y = IMG_H - GRID; pos.y >= 0; pos.y -= 32)
-    {
-        e = array(mlx()->objs)->add(new_object(pos, sizeof(t_object)));
-        load_imgs((t_object *)e->content, "imgs/wall.xpm");
-    }
+        array(mlx()->objs)->add(new_wall(pos));
 }
 
 void	data_init(t_mlx_data *data)
@@ -92,7 +78,6 @@ int up(t_mlx_data *data)
 
 int main(void)
 {
-	
 	data_init(mlx());
 	mlx_hook(mlx()->mlx_win, 17, 0, ft_close, mlx());
 	mlx()->objs = creat_array();

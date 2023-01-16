@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../INCS/snake.h"
+#include "../../INCS/snake.h"
 
 t_object *this(void)
 {
@@ -21,6 +21,8 @@ static void render()
 {
 	draw_obj(this());
 }
+
+
 
 t_object	*new_object(t_pos pos, size_t size)
 {

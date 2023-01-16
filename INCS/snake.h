@@ -28,7 +28,8 @@ typedef struct s_pos t_pos;
 
 typedef enum e_type{
 	OBJECT,
-	APPLE
+	APPLE,
+    WALL
 }	t_type;
 
 typedef enum e_dir{
@@ -80,20 +81,21 @@ struct s_apple {
 	int		direction;
 };
 
+
 t_object	*new_object(t_pos pos,size_t size);
 void		draw();
 void		my_mlx_pixel_put(t_data *data, int x, int y, int color);
 t_mlx_data *mlx();
-void	draw_obj(t_object *obj);
-void	create_square(t_object *obj, int color);
-void	draw_rec(int x, int y, int color);
-void	load_imgs(t_object *obj, char *path);
-t_object *this();
-t_object *new_apple(int x, int y);
-void	draw_clear();
-void	render_each(t_elems *e, void *o);
-void	keys_each(t_elems *e, void *o);
-void	create_rec(t_object *obj, int color, t_pos rec);
-
+void	    draw_obj(t_object *obj);
+void	    create_square(t_object *obj, int color);
+void	    draw_rec(int x, int y, int color);
+void	    load_imgs(t_object *obj, char *path);
+t_object    *this();
+t_object    *new_apple(int x, int y);
+void	    draw_clear();
+void	    render_each(t_elems *e, void *o);
+void	    keys_each(t_elems *e, void *o);
+void	    create_rec(t_object *obj, int color, t_pos rec);
+t_object    *new_wall(t_pos pos);
 
 #endif

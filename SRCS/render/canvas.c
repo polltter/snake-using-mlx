@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../INCS/snake.h"
+#include "../../INCS/snake.h"
 
 void	load_imgs(t_object *obj, char *path)
 {

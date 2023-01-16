@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../INCS/snake.h"
+#include "../../INCS/snake.h"
 
 
 static void render(void)
