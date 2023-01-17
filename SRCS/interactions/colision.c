@@ -5,24 +5,20 @@
 
 int collision(t_object *a, t_object *b)
 {
-    if (a->pos.x <= b->pos.x + GRID && a->pos.x >= b->pos.x \
-        && a->pos.y <= b->pos.y + GRID && a->pos.y >= b->pos.y)
-        return (0);
-    else if (a->pos.x <= b->pos.x + GRID && a->pos.x >= b->pos.x \
-        && a->pos.y + GRID <= b->pos.y + GRID && a->pos.y + GRID >= b->pos.y)
-        return (0);
-    else if (a->pos.x + GRID <= b->pos.x + GRID && a->pos.x + GRID >= b->pos.x \
-        && a->pos.y <= b->pos.y + GRID && a->pos.y >= b->pos.y)
-        return (0);
-    else if (a->pos.x + GRID <= b->pos.x + GRID && a->pos.x + GRID >= b->pos.x \
-        && a->pos.y + GRID <= b->pos.y + GRID && a->pos.y + GRID >= b->pos.y)
-        return (0);
-    return (1);
+    return (!(a->pos.x < b->pos.x + b->pos.w && \
+        a->pos.x + a->pos.w > b->pos.x && \
+        a->pos.y < b->pos.y + b->pos.h && \
+        a->pos.y + a->pos.h > b->pos.y));
 }
-void collision_each(t_elems *elem, void *apple)
+void collision_each(t_elems *elem, void *snake)
 {
     t_object *obj = (t_object *)elem->content;
-    if (obj !=  apple && !collision((t_object *)apple, obj))
-        exit (0);
-
+    mlx()->this_obj = obj;
+    if (obj !=  snake && !collision((t_object *)snake, obj))
+    {
+        if (obj->collided)
+            obj->collided((t_object *)snake);
+        mlx()->this_obj = snake;
+        ((t_object *)snake)->collided(obj);
+    }
 }

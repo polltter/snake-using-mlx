@@ -21,9 +21,9 @@ typedef struct s_array t_array;
 struct s_elems{
 
 	void	*content;
-	void	(*del)(void *content);
 	t_elems	*next;
 	t_elems	*prev;
+    void	(*del)(void *content);
 };
 
 struct s_array{

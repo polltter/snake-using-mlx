@@ -12,23 +12,34 @@
 
 #include "../../INCS/snake.h"
 
+static void collided(t_object *with)
+{
+    (void)with;
+    srand(time(0));
+    this()->pos.x = (float)rand() / (float)RAND_MAX * (IMG_W - 105) + 35;
+    this()->pos.y = (float)rand() / (float)RAND_MAX * (IMG_H - 105) + 35;
+}
+
 
 static void render(void)
 {
 	t_apple *apple = (t_apple *) this();
-	static int count;
-	if (count++ > 3)
-	{	
-		if (apple->direction == UP)
-			apple->pos.y -= 2;
-		else if (apple->direction == DOWN)
-			apple->pos.y += 2;
-		else if (apple->direction == LEFT)
-			apple->pos.x -= 2;
-		else if (apple->direction == RIGHT)
-			apple->pos.x += 2;			
-		count = 0;
-	}
+    static int count_2;
+    static int flag;
+
+    if (!flag && ++count_2 > 70)
+    {
+        apple->pos.w = 36;
+        apple->pos.h = 36;
+        flag = 1;
+    }
+    else if (++count_2 > 140)
+    {
+        flag = 0;
+        count_2 = 0;
+        apple->pos.w = 32;
+        apple->pos.h = 32;
+    }
 	draw_obj(this());
 }
 
@@ -45,17 +56,21 @@ static void move(int k) {
 		apple->direction = DOWN;
 }
 
-t_object *new_apple(int x, int y)
+t_object *new_apple(void)
 {
 	t_apple	*apple;
 	t_pos	pos;
-	pos.x = x;
-	pos.y = y;
+    srand(time(0));
+    pos.x = (float)rand() / (float)RAND_MAX * (IMG_W - 105) + 35;
+	pos.y = (float)rand() / (float)RAND_MAX * (IMG_H - 105) + 35;
 	apple = (t_apple *) new_object(pos, sizeof(t_apple));
 	apple->type = APPLE;
 	load_imgs((t_object *) apple, "imgs/cona.xpm");
+    apple->pos.w = apple->img.w;
+    apple->pos.h = apple->img.h;
 	apple->render = render;
 	apple->keys = move;
+    apple->collided = collided;
 	apple->direction = RIGHT;
 	return ((t_object *) apple);
 }

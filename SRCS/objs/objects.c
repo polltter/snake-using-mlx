@@ -22,8 +22,6 @@ static void render()
 	draw_obj(this());
 }
 
-
-
 t_object	*new_object(t_pos pos, size_t size)
 {
 	t_object *new = ft_calloc(size);

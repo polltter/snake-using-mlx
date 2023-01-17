@@ -45,9 +45,26 @@ void	draw()
 
 void	draw_obj(t_object *obj)
 {
-	for (int sx = 0; sx < obj->img.w; sx++)
-		for (int sy = 0; sy < obj->img.h; sy++)
-			my_mlx_pixel_put(&(mlx()->img), sx + obj->pos.x, sy + obj->pos.y, my_mlx_pixel_get(&(obj->img), sx, sy));
+	draw_img(&(obj->img), obj->pos);
+//	for (int sx = 0; sx < obj->img.w; sx++)
+//		for (int sy = 0; sy < obj->img.h; sy++)
+//			my_mlx_pixel_put(&(mlx()->img), sx + obj->pos.x, sy + obj->pos.y, my_mlx_pixel_get(&(obj->img), sx, sy));
+}
+
+void	draw_img(t_data *data, t_pos pos)
+{
+	double c_x = data->w / pos.w;
+	double c_y = data->h / pos.h;
+	double x_color = 0;
+	double y_color;
+
+	for (int sx = 0; sx < pos.w; sx++, x_color += c_x)
+	{
+		y_color = 0;
+		for (int sy = 0; sy < pos.h; sy++, y_color += c_y)
+			my_mlx_pixel_put(&(mlx()->img), sx + pos.x, sy + pos.y,	my_mlx_pixel_get(data, x_color, y_color));
+	}
+
 }
 
 void	draw_rec(int x, int y, int color)

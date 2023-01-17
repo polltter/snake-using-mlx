@@ -14,7 +14,7 @@
 
 void	create_wall(void)
 {
-    t_pos   pos = {0, 0};
+t_pos   pos = {0, 0, GRID, GRID};
 
 	for (; pos.x <= IMG_W; pos.x += 32)
 		array(mlx()->objs)->add(new_wall(pos));
@@ -80,7 +80,8 @@ int main(void)
 	mlx_hook(mlx()->mlx_win, 17, 0, ft_close, mlx());
 	mlx()->objs = creat_array();
 	create_wall();
-	array(mlx()->objs)->add(new_apple(GRID + 1, GRID + 1));
+	array(mlx()->objs)->add(new_apple());
+	array(mlx()->objs)->add(new_snake());
 	mlx_hook(mlx()->mlx_win, 2, 1l << 0, handle_keys, NULL);
 	//mlx_hook(mlx()->mlx_win, 4, 1l << 2, select_obj, mlx());
 	mlx_loop_hook(mlx()->mlx, up, mlx());

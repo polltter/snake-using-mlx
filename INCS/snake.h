@@ -10,76 +10,20 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SNAKE
-# define SNAKE
+#ifndef SNAKE_H
+# define SNAKE_H
 
 # include <../mlx_linux/mlx.h>
 # include <stdlib.h>
 # include <stdio.h>
+# include <time.h>
+# include "objects.h"
 # include "../SRCS/list_utils/list_utils.h" 
 
 # define IMG_W 1000	
 # define IMG_H 1000
 # define GRID 32
 
-typedef struct s_object t_object;
-typedef struct s_apple t_apple;
-typedef struct s_pos t_pos;
-
-typedef enum e_type{
-	OBJECT,
-	APPLE,
-    WALL
-}	t_type;
-
-typedef enum e_dir{
-	UP,
-	DOWN,
-	LEFT,
-	RIGHT
-}	t_dir;
-
-typedef struct s_data {
-	void	*img;
-	char	*addr;
-	int		bits_per_pixel;
-	int		line_length;
-	int		endian;
-	int 	w;
-	int		h;
-}				t_data;
-
-typedef struct s_mlx_data {
-	void		*mlx;
-	void		*mlx_win;
-	t_data		img;
-	t_object	*this_obj;
-	void		*objs;
-}	t_mlx_data;
-
-struct s_pos {
-	int	x;
-	int	y;
-};
-
-struct s_object {
-	t_type	type;
-	t_data	img;
-	t_pos	pos;
-	void	(*update)();
-	void	(*render)();
-	void	(*keys)(int k);
-};
-
-struct s_apple {
-	t_type	type;
-	t_data	img;
-	t_pos	pos;
-	void	(*update)();
-	void	(*render)();
-	void	(*keys)(int k);
-	int		direction;
-};
 
 
 t_object	*new_object(t_pos pos,size_t size);
@@ -91,12 +35,13 @@ void	    create_square(t_object *obj, int color);
 void	    draw_rec(int x, int y, int color);
 void	    load_imgs(t_object *obj, char *path);
 t_object    *this();
-t_object    *new_apple(int x, int y);
+t_object    *new_apple(void);
 void	    draw_clear();
 void	    render_each(t_elems *e, void *o);
 void	    keys_each(t_elems *e, void *o);
 void	    create_rec(t_object *obj, int color, t_pos rec);
 t_object    *new_wall(t_pos pos);
 void        collision_each(t_elems *elem, void *apple);
-
+void	    draw_img(t_data *data, t_pos pos);
+t_object    *new_snake(void);
 #endif
