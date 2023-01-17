@@ -2,14 +2,14 @@
 // Created by mvenanci on 1/17/23.
 //
 
-#ifndef SNAKE_OBJECTS_H
-#define SNAKE_OBJECTS_H
+#ifndef OBJECTS_H
+#define OBJECTS_H
 
 typedef struct s_object t_object;
 typedef struct s_apple t_apple;
 typedef struct s_snake t_snake;
 typedef struct s_pos t_pos;
-typedef s_body t_body;
+typedef struct s_body t_body;
 
 typedef enum e_type{
     OBJECT,
@@ -87,7 +87,7 @@ struct s_snake {
     void	(*render)();
     void    (*collided)(t_object *obj);
     void	(*keys)(int k);
-    int		direction;
+    t_pos   direction;
 };
 
 #endif //SNAKE_OBJECTS_H

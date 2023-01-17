@@ -4,6 +4,19 @@
 
 #include "../../INCS/snake.h"
 
+t_body  *add_new_body(t_pos *prev_pos, t_data *img, t_body *body, t_snake *head)
+{
+    t_body *new;
+
+
+    new = (t_body *)ft_calloc(sizeof(t_body));
+    if (!body)
+    {
+        new->pos.x = head->pos.x -
+        head->body = new_body;
+    }
+}
+
 static void collided(t_object *with)
 {
     if (with->type == WALL)
@@ -13,7 +26,10 @@ static void collided(t_object *with)
     }
     else if (with->type == APPLE)
     {
-        if ()
+        mlx()->this_obj = array(mlx()->objs)->end;
+        if (((t_snake *)this())->body)
+
+
     }
 }
 
