@@ -66,8 +66,8 @@ int	handle_keys(int k)
 int up(t_mlx_data *data)
 {
 	t_object *t = data->this_obj;
-
 	draw_clear();
+    array(mlx()->objs)->for_each(collision_each, array(mlx()->objs)->end->content);
 	array(mlx()->objs)->for_each(render_each, NULL);
 	draw();
 	data->this_obj = t;
@@ -80,7 +80,7 @@ int main(void)
 	mlx_hook(mlx()->mlx_win, 17, 0, ft_close, mlx());
 	mlx()->objs = creat_array();
 	create_wall();
-	array(mlx()->objs)->add(new_apple(GRID, GRID));
+	array(mlx()->objs)->add(new_apple(GRID + 1, GRID + 1));
 	mlx_hook(mlx()->mlx_win, 2, 1l << 0, handle_keys, NULL);
 	//mlx_hook(mlx()->mlx_win, 4, 1l << 2, select_obj, mlx());
 	mlx_loop_hook(mlx()->mlx, up, mlx());

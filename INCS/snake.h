@@ -97,5 +97,6 @@ void	    render_each(t_elems *e, void *o);
 void	    keys_each(t_elems *e, void *o);
 void	    create_rec(t_object *obj, int color, t_pos rec);
 t_object    *new_wall(t_pos pos);
+void        collision_each(t_elems *elem, void *apple);
 
 #endif
