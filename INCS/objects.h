@@ -75,12 +75,12 @@ struct s_body{
     t_data  *img;
     t_pos   pos;
     t_body  *next;
-    t_body  *perv;
+    t_body  *prev;
+    t_snake *head;
 };
 
 struct s_snake {
     t_type	type;
-    t_body  *body;
     t_data	img;
     t_pos	pos;
     void	(*update)();
@@ -88,6 +88,8 @@ struct s_snake {
     void    (*collided)(t_object *obj);
     void	(*keys)(int k);
     t_pos   direction;
+    t_body  *body;
+    t_body  *tail;
 };
 
 #endif //SNAKE_OBJECTS_H
