@@ -64,7 +64,6 @@ void	draw_img(t_data *data, t_pos pos)
 		for (int sy = 0; sy < pos.h; sy++, y_color += c_y)
 			my_mlx_pixel_put(&(mlx()->img), sx + pos.x, sy + pos.y,	my_mlx_pixel_get(data, x_color, y_color));
 	}
-
 }
 
 void	draw_rec(int x, int y, int color)

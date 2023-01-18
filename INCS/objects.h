@@ -74,6 +74,7 @@ struct s_apple {
 struct s_body{
     t_data  *img;
     t_pos   pos;
+    t_pos   dir;
     t_body  *next;
     t_body  *prev;
     t_snake *head;

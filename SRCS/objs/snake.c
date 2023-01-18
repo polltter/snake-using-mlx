@@ -6,8 +6,8 @@
 
 t_data *body_img(void)
 {
-    static t_data *body_img;
-    return (body_img);
+    static t_data body_img;
+    return (&body_img);
 }
 
 void    add_new_body(t_body *body, t_snake *head)
@@ -16,19 +16,25 @@ void    add_new_body(t_body *body, t_snake *head)
 
     new = ft_calloc(sizeof(t_body));
     new->img = body_img();
+    new->pos.h = head->pos.h;
+    new->pos.w = head->pos.w;
     if (!body)
     {
         new->head = head;
         new->pos.x = head->pos.x - head->direction.x * GRID;
         new->pos.y = head->pos.y - head->direction.y * GRID;
+        new->dir.x = head->direction.x;
+        new->dir.y = head->direction.y;
         head->body = new;
     }
     else
     {
         head->tail->next = new;
         new->prev = head->tail;
-        new->pos.x = head->pos.x - head->direction.x * GRID;
-        new->pos.y = head->pos.y - head->direction.y * GRID;
+        new->pos.x = head->tail->pos.x - head->tail->dir.x * GRID;
+        new->pos.y = head->tail->pos.y - head->tail->dir.y * GRID;
+        new->dir.x = head->tail->dir.x;
+        new->dir.y = head->tail->dir.y;
     }
     head->tail = new;
 }
@@ -41,21 +47,20 @@ static void collided(t_object *with)
         exit(0);
     }
     else if (with->type == APPLE)
-        array(mlx()->objs)->add(new_snake());
+        add_new_body(((t_snake *) this())->tail, (t_snake *) this());
 }
 
 static void update_pos(t_snake *snake)
 {
-    t_body *temp = snake->tail;
+    t_body *temp = snake->body;
+    t_pos   temp_pos;
+    t_pos   temp2_pos;
+
     static int count;
 
-    if (count++ > 3)
+    if (count++ > 7)
     {
-        while (temp->head != snake)
-        {
-            temp->pos.x = temp->prev->pos.x;
-            temp->pos.y = temp->prev->pos.y;
-        }
+        temp_pos = snake->pos;
         if (snake->direction.y == 1)
             snake->pos.y -= 2;
         else if (snake->direction.y == -1)
@@ -64,18 +69,38 @@ static void update_pos(t_snake *snake)
             snake->pos.x -= 2;
         else if (snake->direction.x == 1)
             snake->pos.x += 2;
+        while (temp)
+        {
+            temp2_pos = temp->pos;
+            temp->pos.x = temp_pos.x;
+            temp->pos.y = temp_pos.y;
+            temp_pos = temp2_pos;
+            temp = temp->next;
+        }
+//        if (temp)
+//        {
+//            temp->pos.x = snake->pos.x - GRID * snake->direction.x;
+//            temp->pos.y = snake->pos.y + GRID * snake->direction.y;
+//            temp->dir.x = snake->direction.x;
+//            temp->dir.y = snake->direction.y;
+//        }
+
         count = 0;
+
+
     }
 }
 
 static void draw_snake(t_body *body)
 {
-    draw_obj(this());
-    while (body)
+
+    t_body  *temp = body;
+    while (temp)
     {
-        draw_img(body->img, body->pos);
-        body = body->next;
+        draw_img(temp->img, temp->pos);
+        temp = temp->next;
     }
+    draw_obj(this());
 }
 
 static void render(void)

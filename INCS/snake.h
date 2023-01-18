@@ -20,8 +20,8 @@
 # include "objects.h"
 # include "../SRCS/list_utils/list_utils.h" 
 
-# define IMG_W 1000	
-# define IMG_H 1000
+# define IMG_W 500
+# define IMG_H 500
 # define GRID 32
 
 
